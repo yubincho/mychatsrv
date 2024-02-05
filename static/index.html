@@ -1,10 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nest Chat</title>
 </head>
 <body>
-$END$
+<h2>Simple Nest Chat</h2>
+
+<div>
+    <h2>채팅방 목록</h2>
+    <ul id="rooms"></ul>
+</div>
+
+<div id="chat">Nest Chat</div>
+
+
+<input type="text" id="message" placeholder="메시지를 입력해주세요.">
+<button onclick="sendMessage()">전송</button>
+<button onclick="createRoom()">방 만들기</button>
+
+<div>
+    <h2>공지</h2>
+    <div id="notice"></div>
+</div>
+
+
+<script  src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script src="http://localhost:3000/script.js">
+
+</script>
 </body>
+
+
 </html>
