@@ -1,6 +1,5 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+
 import {MembersService} from "../members/members.service";
 import {CreateMemberDto} from "../members/dto/create-member.dto";
 import {LoginMemberDto} from "../members/dto/login-member.dto";

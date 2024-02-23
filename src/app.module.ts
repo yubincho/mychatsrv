@@ -11,6 +11,9 @@ import * as Joi from '@hapi/joi';
 import {ConfigModule} from "@nestjs/config";
 import {MessageModule} from "./chat-group/message/message.module";
 import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
+import { CategoryModule } from './category/category.module';
+import {JwtModule} from "@nestjs/jwt";
 
 
 @Module({
@@ -28,7 +31,11 @@ import { AuthModule } from './auth/auth.module';
 
       }),
     }),
-      ChatsModule, MessageModule, MembersModule, DatabaseModule, CommonModule, AuthModule],
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
+      ChatsModule, MessageModule, MembersModule, DatabaseModule, CommonModule, AuthModule, ProductModule,  CategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
