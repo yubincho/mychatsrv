@@ -17,7 +17,7 @@ export class Category extends CommonEntity {
     @Column({ default: false })
     public isDeleted: boolean;
 
-    // @OneToMany(() => Product, (product: Product) => product.category)
-    // public products: Product[];
+    @OneToMany(() => Product, (product: Product) => product.category)
+    public products: Product[];
 
 }

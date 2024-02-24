@@ -8,6 +8,7 @@ import {HttpException, HttpStatus} from "@nestjs/common";
 import {IsEmail, IsNotEmpty, IsString} from "class-validator";
 import {Chats} from "../../chat-group/chats/entities/chats.entity";
 import {Messages} from "../../chat-group/message/entities/messages.entity";
+import {Order} from "../../order/entities/order.entity";
 
 
 @Entity()
@@ -57,6 +58,11 @@ export class Member extends CommonEntity {
         default: [RoleEnum.USER],
     })
     public roles: RoleEnum[];
+
+
+    /** 주문 */
+    @OneToMany(() => Order, (order: Order) => order.user)
+    public orders: Order[];
 
     /** 채팅방 */
     @ManyToMany(() => Chats, (chat) => chat.users)

@@ -6,12 +6,11 @@ import {CustomAuthInterceptor} from "../common/interceptor/CustomAuthInterceptor
 
 
 @Controller('category')
-@UseInterceptors(CustomAuthInterceptor)
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
 
-
+  @UseInterceptors(CustomAuthInterceptor)
   @Post('/')
   async create(@Body(new ValidationPipe()) dto: CreateCategoryDto) {
     return await this.categoryService.createBrand(dto)
@@ -20,6 +19,20 @@ export class CategoryController {
   @Get()
   async getAll() {
     return await this.categoryService.getAllCategory()
+  }
+
+
+  @UseInterceptors(CustomAuthInterceptor)
+  @Get('/:id')
+  async getCategoryById(@Param('id') id: string) {
+    return await this.categoryService.getByIdOfCategory(id)
+  }
+
+
+  @UseInterceptors(CustomAuthInterceptor)
+  @Delete('/:id')
+  async deleteOne(@Param('id') id: string) {
+    return await this.categoryService.deleteByIdOfCategory(id)
   }
 
 }

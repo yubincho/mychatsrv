@@ -1,0 +1,6 @@
+export enum POINT_TRANSACTION_STATUS_ENUM {
+    READY = 'READY',
+    PENDING = 'PENDING',
+    PAYMENT = 'PAYMENT',
+    CANCEL = 'CANCEL',
+}
