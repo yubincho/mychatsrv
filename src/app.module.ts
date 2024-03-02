@@ -15,6 +15,7 @@ import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import {JwtModule} from "@nestjs/jwt";
 import { OrderModule } from './order/order.module';
+import { PortoneModule } from './portone/portone.module';
 
 
 @Module({
@@ -36,7 +37,17 @@ import { OrderModule } from './order/order.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '60s' },
     }),
-      ChatsModule, MessageModule, MembersModule, DatabaseModule, CommonModule, AuthModule, ProductModule,  CategoryModule, OrderModule],
+      ChatsModule,
+    MessageModule,
+    MembersModule,
+    DatabaseModule,
+    CommonModule,
+    AuthModule,
+    ProductModule,
+    CategoryModule,
+    OrderModule,
+    PortoneModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

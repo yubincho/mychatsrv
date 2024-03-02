@@ -10,6 +10,13 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   app.useStaticAssets(join(__dirname, '..', 'static'))
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+
+  // cors 에러 방지
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
 
   await app.listen(3000);
 }

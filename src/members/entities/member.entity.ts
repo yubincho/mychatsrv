@@ -59,6 +59,11 @@ export class Member extends CommonEntity {
     })
     public roles: RoleEnum[];
 
+    /** (주문에 필요한) 결제 포인트 잔액
+     * 디폴트 : 0원
+     * */
+    @Column({ default: 0 })
+    public point: number;
 
     /** 주문 */
     @OneToMany(() => Order, (order: Order) => order.user)

@@ -52,7 +52,7 @@ export class OrderService {
         order.orderDate = new Date();
 
         await this.orderRepository.save(order);
-        return order;
+        return order; // user, product, order 정보 모두 리턴됨
     }
 
     async createOrder(createOrderDto: CreateOrderDto, userId: string): Promise<Order> {
