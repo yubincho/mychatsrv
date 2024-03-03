@@ -26,22 +26,46 @@ export class MembersService {
     }
 
 
+    // async getUserByEmail(email: string) {
+    //     const user = await this.memberRepository.findOne({
+    //         where: { email },
+    //         relations: ['products', 'orders', ],
+    //     },
+    // )
+    //     if (user) return user
+    //     throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
+    // }
     async getUserByEmail(email: string) {
-        const user = await this.memberRepository.findOne({
-            where: { email },
-            relations: ['products', 'orders', ],
-        },
-    )
-        if (user) return user
-        throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
+        const user = await this.memberRepository
+            .createQueryBuilder('user')
+            .where('user.email = :email', { email })
+            .leftJoinAndSelect('user.products', 'products')
+            .leftJoinAndSelect('products.category', 'category')
+            .leftJoinAndSelect('user.orders', 'orders')
+            .getOne();
+        if (user) return user;
+        throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND);
+
     }
 
+    // async getUserById(id: string) {
+    //     const user = await this.memberRepository.findOne({
+    //         where: { id },
+    //         relations: ['products', 'orders']
+    //     })
+    //     if (user) return user
+    //     throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
+    // }
     async getUserById(id: string) {
-        const user = await this.memberRepository.findOne({
-            where: { id },
-            relations: ['products', 'orders']
-        })
-        if (user) return user
-        throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
+        const user = await this.memberRepository
+            .createQueryBuilder('user')
+            .where('user.id = :id', { id })
+            .leftJoinAndSelect('user.products', 'products')
+            .leftJoinAndSelect('products.category', 'category')
+            .leftJoinAndSelect('user.orders', 'orders')
+            .getOne();
+
+        if (user) return user;
+        throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND);
     }
 }

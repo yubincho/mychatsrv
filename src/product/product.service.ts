@@ -39,12 +39,25 @@ export class ProductService {
     }
 
 
+    // async findOne(id: string) {
+    //   const product = await this.productRepository.findOne({
+    //       where: { id },
+    //       relations: ['user', 'category',],
+    //   })
+    //   if (!product) throw new HttpException('No Product found', HttpStatus.NOT_FOUND)
+    //     return product
+    // }
     async findOne(id: string) {
-      const product = await this.productRepository.findOne({where: { id }})
-      if (!product) throw new HttpException('No Product found', HttpStatus.NOT_FOUND)
-        return product
+      const product = await this.productRepository
+          .createQueryBuilder('product')
+          .where('product.id = :id', { id })
+          .leftJoinAndSelect('product.user', 'user')
+          .leftJoinAndSelect('product.category', 'category')
+          .leftJoinAndSelect('user.orders', 'orders')
+          .getOne();
+      if (product) return product;
+      throw new HttpException('No Product found', HttpStatus.NOT_FOUND);
     }
-
 
 
 

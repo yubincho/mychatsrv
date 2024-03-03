@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Req, UseGuards} from '@nestjs/common';
 import { ProductService } from './product.service';
 import {CreateProductDto} from "./dto/create-product.dto";
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
@@ -24,6 +24,10 @@ export class ProductController {
     return await this.productService.create(dto, user)
   }
 
+  @Get('/:id')
+  async getProductById(@Param('id') id: string) {
+    return await this.productService.findOne(id);
+  }
 
 
 }
