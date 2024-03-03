@@ -27,14 +27,20 @@ export class MembersService {
 
 
     async getUserByEmail(email: string) {
-        const user = await this.memberRepository.findOneBy({ email })
-
+        const user = await this.memberRepository.findOne({
+            where: { email },
+            relations: ['products', 'orders', ],
+        },
+    )
         if (user) return user
         throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
     }
 
     async getUserById(id: string) {
-        const user = await this.memberRepository.findOneBy({ id })
+        const user = await this.memberRepository.findOne({
+            where: { id },
+            relations: ['products', 'orders']
+        })
         if (user) return user
         throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND)
     }

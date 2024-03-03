@@ -1,6 +1,8 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
 import { ProductService } from './product.service';
 import {CreateProductDto} from "./dto/create-product.dto";
+import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
+import {RequestWithUserInterface} from "../auth/interfaces/requestWithUser.interface";
 
 
 @Controller('product')
@@ -9,13 +11,17 @@ export class ProductController {
 
   @Get()
   async getAllProducts() {
-    return await this.productService.getAll()
+    let posts = await this.productService.getAll();
+    return { posts, count: posts.length}
   }
 
 
+
   @Post()
-  async createProduct(@Body() dto: CreateProductDto) {
-    return await this.productService.create(dto)
+  @UseGuards(JwtAuthGuard)
+  async createProduct(@Body() dto: CreateProductDto, @Req() req: RequestWithUserInterface) {
+    const user = req.user
+    return await this.productService.create(dto, user)
   }
 
 

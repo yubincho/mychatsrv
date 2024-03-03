@@ -4,6 +4,8 @@ import {Product} from "./entities/product.entity";
 import {Repository} from "typeorm";
 import {CreateProductDto} from "./dto/create-product.dto";
 import {CategoryService} from "../category/category.service";
+import {Member} from "../members/entities/member.entity";
+import {use} from "passport";
 
 @Injectable()
 export class ProductService {
@@ -16,14 +18,15 @@ export class ProductService {
   ) {}
 
 
-    async create(dto: CreateProductDto): Promise<Product> {
+    async create(dto: CreateProductDto, user: Member): Promise<Product> {
         const { categoryId, ...productDetails } = dto;
 
         const category = await this.categoryService.getByIdOfCategory(categoryId)
 
         const newProduct = this.productRepository.create({
                 category,
-                ...productDetails
+                ...productDetails,
+            user: user,
         })
         await this.productRepository.save(newProduct)
         return newProduct
@@ -31,7 +34,7 @@ export class ProductService {
 
     async getAll() {
       return await this.productRepository.find({
-          relations: ['category'],
+          relations: ['category', 'user',],
       });
     }
 

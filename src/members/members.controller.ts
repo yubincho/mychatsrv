@@ -1,4 +1,4 @@
-import {Body, Controller, Post, ValidationPipe} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, ValidationPipe} from '@nestjs/common';
 import { MembersService } from './members.service';
 import {CreateMemberDto} from "./dto/create-member.dto";
 
@@ -11,5 +11,9 @@ export class MembersController {
     return await this.membersService.registerMember(createMemberDto)
   }
 
+  @Get('/:id')
+  async findUserById(@Param('id') id: string) {
+    return await this.membersService.getUserById(id);
+  }
 
 }

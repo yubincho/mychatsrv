@@ -2,6 +2,7 @@ import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
 import {CommonEntity} from "../../common/entities/common.entity";
 import {Category} from "../../category/entities/category.entity";
 import {Order} from "../../order/entities/order.entity";
+import {Member} from "../../members/entities/member.entity";
 
 @Entity()
 export class Product extends CommonEntity {
@@ -23,6 +24,9 @@ export class Product extends CommonEntity {
         onDelete : 'NO ACTION',
     })
     public category : Category;
+
+    @ManyToOne(() => Member, (user: Member) => user.products, )
+    public user: Member;
 
     // 주문
     @OneToMany(() => Order, (order: Order) => order.product)

@@ -9,6 +9,7 @@ import {IsEmail, IsNotEmpty, IsString} from "class-validator";
 import {Chats} from "../../chat-group/chats/entities/chats.entity";
 import {Messages} from "../../chat-group/message/entities/messages.entity";
 import {Order} from "../../order/entities/order.entity";
+import {Product} from "../../product/entities/product.entity";
 
 
 @Entity()
@@ -16,7 +17,7 @@ export class Member extends CommonEntity {
 
     @IsNotEmpty()
     @IsString()
-    @Column({ nullable: false })
+    @Column({ unique: true })
     public name: string;
 
     @IsEmail()
@@ -53,11 +54,14 @@ export class Member extends CommonEntity {
     @IsString()
     @Column({
         type: 'enum',
-        enum: RoleEnum,
-        array: true,
-        default: [RoleEnum.USER],
+        enum: Object.values(RoleEnum),  // enum: RoleEnum,
+        // array: true,
+        default: RoleEnum.USER,  // default: [RoleEnum.USER]
     })
-    public roles: RoleEnum[];
+    public roles: RoleEnum;  // public roles: RoleEnum[];
+
+    @OneToMany(() => Product, (product: Product) => product.user)
+    products: Product[];
 
     /** (주문에 필요한) 결제 포인트 잔액
      * 디폴트 : 0원
@@ -78,8 +82,11 @@ export class Member extends CommonEntity {
     @OneToMany(() => Messages, (message) => message.author)
     messages: Messages[];
 
-    /** 회원가입시 데이터 저장전 실행되는 함수
-     * 프로필 이미지 자동 생성, 비밀번호 해시화 */
+    /**
+     * 회원가입시 데이터 저장전 실행되는 함수
+     * 1. 프로필 이미지 자동 생성,
+     * 2. 비밀번호 해시화
+     * */
     @BeforeUpdate()
     @BeforeInsert()
     async beforeFunction(): Promise<void> {
