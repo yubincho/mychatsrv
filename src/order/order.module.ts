@@ -11,10 +11,11 @@ import {MembersService} from "../members/members.service";
 import {CategoryService} from "../category/category.service";
 import {Category} from "../category/entities/category.entity";
 import {JwtService} from "@nestjs/jwt";
+import {PortoneService} from "../portone/portone.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order, Member, Product, Category])],
   controllers: [OrderController],
-  providers: [OrderService, ConfigService, ProductService, MembersService, CategoryService, JwtService],
+  providers: [OrderService, ConfigService, ProductService, MembersService, CategoryService, JwtService, PortoneService,],
 })
 export class OrderModule {}

@@ -10,14 +10,14 @@ export class Order {
     @PrimaryGeneratedColumn()
     public orderId: number;
 
-    // @Column()
-    // impUid?: string;
+    @Column({ nullable: true })
+    impUid?: string;
 
     @Column({ nullable: true })
-    public quantity: number;
+    public quantity?: number;
 
-    @Column()
-    public orderAmount: number;
+    @Column({ nullable: true })
+    public orderAmount?: number;
 
     @Column({
         type: 'enum',

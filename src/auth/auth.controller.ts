@@ -23,9 +23,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   async loginUser(@Req() req: RequestWithUserInterface) {
     const user = req.user
-
     const token = await this.authService.generateAccessToken(user.id)
-
     user.password = undefined
     return { user, token }
   }

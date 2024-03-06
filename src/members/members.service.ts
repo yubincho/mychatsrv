@@ -62,10 +62,26 @@ export class MembersService {
             .where('user.id = :id', { id })
             .leftJoinAndSelect('user.products', 'products')
             .leftJoinAndSelect('products.category', 'category')
-            .leftJoinAndSelect('user.orders', 'orders')
+            // .leftJoinAndSelect('user.orders', 'orders')
             .getOne();
 
         if (user) return user;
         throw new HttpException('없는 회원입니다.', HttpStatus.NOT_FOUND);
     }
+
+
+    async updateUserPoint(orderAmount: number, userId: string) {
+        const user = await this.memberRepository.findOne({
+            where: { id: userId }
+        })
+        const updatedUser = this.memberRepository.create({
+            ...user,
+            point: user.point + orderAmount,
+        })
+
+        return updatedUser;
+    }
+
+
+
 }
